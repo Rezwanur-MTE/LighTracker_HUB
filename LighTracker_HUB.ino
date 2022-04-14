@@ -1,113 +1,88 @@
-#include <Servo.h> // include Servo library 
+#include <Servo.h>
+//defining Servos
+Servo servohori;
+int servoh = 0;
+int servohLimitHigh = 160;
+int servohLimitLow = 20;
 
-Servo horizontal; // horizontal servo
-int servoh = 90; // stand horizontal servo
-//
-Servo vertical; // vertical servo 
-int servov = 90; // stand vertical servo
-
-// LDR pin connections
-//name = analogpin;
-int ldrlt = 0; //LDR top left
-int ldrrt = 1; //LDR top rigt
-int ldrld = 2; //LDR down left ATTTTTTTTTTTTTTTTt
-int ldrrd = 3; //LDR down rigt
-int ledFisso = 13;
-int led = 8;
+Servo servoverti;
+int servov = 0;
+int servovLimitHigh = 160;
+int servovLimitLow = 20;
+//Assigning LDRs
+int ldrtopl = 2; //top left LDR green
+int ldrtopr = 1; //top right LDR yellow
+int ldrbotl = 3; // bottom left LDR blue
+int ldrbotr = 0; // bottom right LDR orange
 
 void setup()
 {
-    Serial.begin(9600);
-    // servo connections
-    //name.attacht(pin);
-    horizontal.attach(10);
-    vertical.attach(9);
-    pinMode(ledFisso, OUTPUT);
-    pinMode(led, OUTPUT);
-
+    servohori.attach(10);
+    servohori.write(0);
+    servoverti.attach(9);
+    servoverti.write(0);
+    delay(500);
 }
 
 void loop()
 {
-    digitalWrite(ledFisso, LOW);
-    digitalWrite(led, LOW);
-    int lt = analogRead(ldrlt); // top left
-    int rt = analogRead(ldrrt); // top right
-    int ld = analogRead(ldrld); // down left
-    int rd = analogRead(ldrrd); // down rigt
+    servoh = servohori.read();
+    servov = servoverti.read();
+    //capturing analog values of each LDR
+    int topl = analogRead(ldrtopl);
+    int topr = analogRead(ldrtopr);
+    int botl = analogRead(ldrbotl);
+    int botr = analogRead(ldrbotr);
+    // calculating average
+    int avgtop = (topl + topr) / 2; //average of top LDRs
+    int avgbot = (botl + botr) / 2; //average of bottom LDRs
+    int avgleft = (topl + botl) / 2; //average of left LDRs
+    int avgright = (topr + botr) / 2; //average of right LDRs
 
-    //int dtime = analogRead(4)/20; // read potentiometers
-    int tol = analogRead(5) / 4;
-    //int tol = 20;
-  //  int tol = 40;
-
-    int avt = (lt + rt) / 2; // average value top
-    int avd = (ld + rd) / 2; // average value down
-    int avl = (lt + ld) / 2; // average value left
-    int avr = (rt + rd) / 2; // average value right
-
-    int dvert = avt - avd; // check the diffirence of up and down
-    int dhoriz = avl - avr;// check the diffirence og left and rigt
-
-    if (-1 * tol > dvert || dvert > tol) // check if the diffirence is in the tolerance else change vertical angle
+    if (avgtop < avgbot)
     {
-        if (avt > avd) {
-            servov = ++servov;
-            //      digitalWrite(led, HIGH);
-            //      delay(1000);                  // attende un seconso (1000 millisecondi)
-            //      digitalWrite(led, LOW);    // spegne il led
-            //      delay(1000);  
-            //      digitalWrite(led, HIGH);
-            if (servov > 180) {
-                servov = 180;
-            }
+        servoverti.write(servov + 1);
+        if (servov > servovLimitHigh)
+        {
+            servov = servovLimitHigh;
         }
-        else if (avt < avd) {
-            //        digitalWrite(led, HIGH);
-            //      delay(100);                  // attende un seconso (1000 millisecondi)
-            //      digitalWrite(led, LOW);    // spegne il led
-            //      delay(100);  
-            //      digitalWrite(led, HIGH);
-            servov = --servov;
-            if (servov < 0) {
-                servov = 0;
-            }
+        delay(10);
+    }
+    else if (avgbot < avgtop)
+    {
+        servoverti.write(servov - 1);
+        if (servov < servovLimitLow)
+        {
+            servov = servovLimitLow;
         }
-        vertical.write(servov);
-        //delay(15);
+        delay(10);
+    }
+    else
+    {
+        servoverti.write(servov);
     }
 
-    if (-1 * tol > dhoriz || dhoriz > tol) // check if the diffirence is in the tolerance else change horizontal angle
+    if (avgleft > avgright)
     {
-        if (avl > avr) {
-            //            digitalWrite(ledFisso, HIGH);
-            //            delay(1000);                  // attende un seconso (1000 millisecondi)
-            //            digitalWrite(ledFisso, LOW);    // spegne il led
-            //            delay(1000);  
-            //            digitalWrite(ledFisso, HIGH);
-            servoh = --servoh;
-
-            if (servoh < 0) {
-                servoh = 0;
-            }
+        servohori.write(servoh + 1);
+        if (servoh > servohLimitHigh)
+        {
+            servoh = servohLimitHigh;
         }
-        else if (avl < avr) {
-            //            digitalWrite(ledFisso, HIGH);
-            //            delay(100);                  // attende un seconso (1000 millisecondi)
-            //            digitalWrite(ledFisso, LOW);    // spegne il led
-            //            delay(100);  
-            //            digitalWrite(ledFisso, HIGH);
-            servoh = ++servoh;
-
-            if (servoh > 169) {
-                servoh = 169;
-            }
+        delay(10);
+    }
+    else if (avgright > avgleft)
+    {
+        servohori.write(servoh - 1);
+        if (servoh < servohLimitLow)
+        {
+            servoh = servohLimitLow;
         }
-        else if (avl == avr) {
-            // nothing
-        }
-        horizontal.write(servoh);
-        //delay();
+        delay(10);
+    }
+    else
+    {
+        servohori.write(servoh);
     }
     delay(50);
 }
