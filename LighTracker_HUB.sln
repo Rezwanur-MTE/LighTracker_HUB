@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LighTracker_HUB", "LighTracker_HUB.vcxproj", "{C5F80730-F44F-4478-BDAE-6634EFC2CA88}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sketch_4sensori", "..\..\light traker\sketch_4sensori\sketch_4sensori.vcxproj", "{7A7319A4-E1D5-4E70-B0DB-9FFF37ED3C87}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "solar_tracker", "..\..\light traker\solar_tracker\solar_tracker.vcxproj", "{48A6D61C-6F40-4B89-B7D0-67BDBF93A8AA}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Debug|x86.Build.0 = Debug|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.ActiveCfg = Release|Win32
 		{C5F80730-F44F-4478-BDAE-6634EFC2CA88}.Release|x86.Build.0 = Release|Win32
-		{7A7319A4-E1D5-4E70-B0DB-9FFF37ED3C87}.Debug|x86.ActiveCfg = Debug|Win32
-		{7A7319A4-E1D5-4E70-B0DB-9FFF37ED3C87}.Debug|x86.Build.0 = Debug|Win32
-		{7A7319A4-E1D5-4E70-B0DB-9FFF37ED3C87}.Release|x86.ActiveCfg = Release|Win32
-		{7A7319A4-E1D5-4E70-B0DB-9FFF37ED3C87}.Release|x86.Build.0 = Release|Win32
 		{48A6D61C-6F40-4B89-B7D0-67BDBF93A8AA}.Debug|x86.ActiveCfg = Debug|Win32
 		{48A6D61C-6F40-4B89-B7D0-67BDBF93A8AA}.Debug|x86.Build.0 = Debug|Win32
 		{48A6D61C-6F40-4B89-B7D0-67BDBF93A8AA}.Release|x86.ActiveCfg = Release|Win32
